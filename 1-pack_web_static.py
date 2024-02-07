@@ -10,13 +10,16 @@ def creaets_folder():
     """ creates versions folder """
     local("mkdir -p versions")
 
+
 def file_name():
     return str(local("date +'%Y%m%%d%H%M%S'"))
+
 
 def compress_all():
     """ creates an archive compressed file """
     file = "web_static_{}".format(file_name())
     local(f"tar -cvzf versions/{file}.tgz web_static/*")
+
 
 def do_pack():
     """ The main fuction """
