@@ -18,7 +18,8 @@ def file_name():
 def compress_all():
     """ creates an archive compressed file """
     file = "web_static_{}".format(file_name())
-    local(f"tar -cvzf versions/{file}.tgz web_static/*")
+    local(f"tar -cvzf versions/archive.tgz web_static/*")
+    local("mv versions/archive.tgz versions/{}".format(file))
 
 
 def do_pack():
