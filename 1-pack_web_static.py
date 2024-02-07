@@ -19,5 +19,6 @@ def compress_all():
     local(f"tar -cvzf versions/{file}.tgz web_static/*")
 
 def do_pack():
+    """ The main fuction """
     creaets_folder()
     compress_all()
