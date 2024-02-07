@@ -4,6 +4,7 @@
     - Creates .tgz file of all the web_static folder components """
 
 from fabric.api import local
+from datetime import datetime
 
 
 def creaets_folder():
@@ -12,7 +13,7 @@ def creaets_folder():
 
 
 def file_name():
-    return str(local("date +'%Y%m%%d%H%M%S'"))
+    return local("date +'%Y%m%d%H%M%S'")
 
 
 def compress_all():
