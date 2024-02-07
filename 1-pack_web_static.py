@@ -11,7 +11,7 @@ def creaets_folder():
     local("mkdir -p versions")
 
 def file_name():
-    return str(local("date +'%Y%m%d%H%M%S'"))
+    return str(local("date +'%Y%m%%d%H%M%S'"))
 
 def compress_all():
     """ creates an archive compressed file """
