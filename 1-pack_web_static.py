@@ -13,14 +13,19 @@ def creaets_folder():
 
 
 def file_name():
-    return local("date +'%Y%m%d%H%M%S'")
+    current_date = datetime.utcnow()
+    filename = "web_static_{}{}{}{}{}{}".format(current_date.year,
+                                                current_date.month,
+                                                current_date.day,
+                                                current_date.hour,
+                                                current_date.minute,
+                                                current_date.second)
+    return filename
 
 
 def compress_all():
     """ creates an archive compressed file """
-    local(f"tar -cvzf versions/archive.tgz web_static/*")
-    file = "web_static_{}".format(file_name())
-    local("mv versions/archive.tgz versions/{}.tgz".format(file))
+    local(f"tar -cvzf versions/{file_name()}.tgz web_static/*")
 
 
 def do_pack():
