@@ -42,9 +42,9 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
     
-    uncompressed_path = local('basename versions/web_static_20170315003959.tgz .tgz')
+    uncompressed_file_name = local(f'basename {archive_path} .tgz')
 
     put(archive_path, '/tmp/')
-    run(f'tar -xvzf {archive_path} -C {uncompressed_path}')
-    run(f'rm -r /tmp/{file_name()}.tgz')
-    run(f'ln -sf {uncompressed_path} /data/web_static/current')
+    run(f'tar -xvzf {archive_path} -C versions/{uncompressed_file_name}')
+    run(f'rm -r /tmp/{uncompressed_file_name}.tgz')
+    run(f'ln -sf {uncompressed_file_name} /data/web_static/current')
