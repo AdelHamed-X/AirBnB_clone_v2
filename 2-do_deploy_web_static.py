@@ -38,12 +38,12 @@ def do_pack():
 
 def do_deploy(archive_path):
     """ distributes an archive to web servers """
-    if not path.exists(archive_path):
+    if not path.isfile(archive_path):
         return False
     
     uncompressed_file_name = local(f'basename {archive_path} .tgz')
 
     put(archive_path, '/tmp/')
-    run(f'tar -xvzf {archive_path} -C versions/{uncompressed_file_name}')
+    run(f'tar -xzf /tmp/{uncompressed_file_name}.tgz -C versions/{uncompressed_file_name}')
     run(f'rm -r /tmp/{uncompressed_file_name}.tgz')
-    run(f'ln -sf {uncompressed_file_name} /data/web_static/current')
+    run(f'ln -sf /data/web_static/releases/{uncompressed_file_name} /data/web_static/current')
