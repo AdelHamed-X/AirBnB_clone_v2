@@ -63,3 +63,4 @@ def do_deploy(archive_path):
     if run(f'ln -sf /data/web_static/releases/{remote_name}/
            /data/web_static/current').failed == True:
         return False
+    return True
