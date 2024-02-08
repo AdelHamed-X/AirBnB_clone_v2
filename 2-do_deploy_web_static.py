@@ -40,10 +40,14 @@ def do_deploy(archive_path):
     """ distributes an archive to web servers """
     if not path.isfile(archive_path):
         return False
-    
-    uncompressed_file_name = local(f'basename {archive_path} .tgz')
 
-    put(archive_path, '/tmp/')
-    run(f'tar -xzf /tmp/{uncompressed_file_name}.tgz -C versions/{uncompressed_file_name}')
-    run(f'rm -r /tmp/{uncompressed_file_name}.tgz')
-    run(f'ln -sf /data/web_static/releases/{uncompressed_file_name} /data/web_static/current')
+    remote_file_name = local(f'basename {archive_path} .tgz')
+
+    if put(archive_path, '/tmp/').failed ==  True:
+        return False
+    if run(f'tar -xzf /tmp/{remote_file_name}.tgz -C versions/{remote_file_name}').failed ==  True:
+        return False
+    if run(f'rm -r /tmp/{remote_file_name}.tgz').failed == True:
+        return False
+    if run(f'ln -sf /data/web_static/releases/{remote_file_name} /data/web_static/current').failed == True:
+        return False
