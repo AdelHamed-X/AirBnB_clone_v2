@@ -43,7 +43,7 @@ def do_deploy(archive_path):
 
     remote_name = local(f'basename {archive_path} .tgz')
 
-    if put(archive_path, '/tmp/').failed ==  True:
+    if put(archive_path, f'/tmp/{remote_name}.tgz').failed ==  True:
         return False
     if run(f"mkdir -p /data/web_static/releases/{remote_name}").failed == True:
         return False
