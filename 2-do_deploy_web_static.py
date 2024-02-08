@@ -10,7 +10,7 @@ env.user = "ubuntu"
 env.hosts = ['54.174.144.6', '34.229.137.175']
 
 
-def creats_folder():
+def create_folder():
     """ creates versions folder """
     local("mkdir -p versions")
 
@@ -33,7 +33,7 @@ def compress_all():
 
 def do_pack():
     """ The main fuction """
-    creats_folder()
+    create_folder()
     compress_all()
 
 
@@ -44,7 +44,7 @@ def do_deploy(archive_path):
     
     uncompressed_path = f"/data/web_static/releases/{file_name()}"
 
-    put(f'{archive_path}', remote_path='/tmp/')
+    put(archive_path, '/tmp/')
     run(f'tar -xvzf {archive_path} -C {uncompressed_path}')
     run(f'rm -r /tmp/{file_name()}.tgz')
     run(f'ln -sf {uncompressed_path} /data/web_static/current')
