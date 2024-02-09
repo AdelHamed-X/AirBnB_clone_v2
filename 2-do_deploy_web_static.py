@@ -47,18 +47,24 @@ def do_deploy(archive_path):
 
     if put(archive_path, '/tmp/{}'.format(remote_file)).failed ==  True:
         return False
-    if run("mkdir -p /data/web_static/releases/{}".format(remote_name)).failed == True:
+    if run("mkdir -p /data/web_static/releases/{}"
+           .format(remote_name)).failed == True:
         return False
-    if run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(remote_file, remote_name)).failed ==  True:
+    if run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'
+           .format(remote_file, remote_name)).failed ==  True:
         return False
     if run('rm -r /tmp/{}'.format(remote_file)).failed == True:
         return False
-    if run("mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/".format(remote_name, remote_name)).failed == True:
+    if run("mv /data/web_static/releases/{}/web_static/* "
+           "/data/web_static/releases/{}/"
+           .format(remote_name, remote_name)).failed == True:
         return False
-    if run("rm -rf /data/web_static/releases/{}/web_static".format(remote_name)).failed == True:
+    if run("rm -rf /data/web_static/releases/{}/web_static"
+           .format(remote_name)).failed == True:
         return False
     if run("rm -rf /data/web_static/current").failed == True:
         return False
-    if run('ln -sf /data/web_static/releases/{}/ /data/web_static/current'.format(remote_name)).failed == True:
+    if run('ln -sf /data/web_static/releases/{}/ /data/web_static/current'
+           .format(remote_name)).failed == True:
         return False
     return True
