@@ -12,11 +12,14 @@ env.key_filename = ['~/.ssh/id_rsa']
 
 def do_pack():
     """ creates an archive compressed file """
-    local("mkdir -p versions")
-    time_now = datetime.now().strftime("%Y%m%d%H%M%S")
-    filename = "web_static_{}".format(time_now)
-    local("tar -cvzf versions/{}.tgz web_static/*".format(filename))
-    return "versions/{}.tgz".format(filename)
+    try:
+        local("mkdir -p versions")
+        time_now = datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = "versions/web_static_{}.tgz".format(time_now)
+        local("tar -cvzf {} web_static/*".format(filename))
+        return filename
+    except:
+        return None
 
 
 def do_deploy(archive_path):
@@ -55,7 +58,7 @@ def do_deploy(archive_path):
 def deploy():
     """ creates and distributes an archive to web servers """
     archive_path = do_pack()
-    if path.exists(archive_path) is False:
+    if archive_path is None:
         return False
 
     return do_deploy(archive_path)
