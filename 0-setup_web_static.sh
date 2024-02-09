@@ -14,21 +14,15 @@ echo "<html>
   <body>
     Holberton School
   </body>
-</html>
-ubuntu@89-web-01:~/$ curl localhost/hbnb_static/index.html
-<html>
-  <head>
-  </head>
-  <body>
-    Holberton School
-  </body>
 </html>" > /data/web_static/releases/test/index.html
 
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 sudo chown -R ubuntu:ubuntu /data/
 
-printf %s "server {
+sudo chmod 777 /etc/nginx/sites-available/default
+
+sudo echo "server {
   listen 80 default_server;
   listen [::]:80 default_server;
   add_header X-Served-By $HOSTNAME;
