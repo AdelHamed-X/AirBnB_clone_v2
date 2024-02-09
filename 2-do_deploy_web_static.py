@@ -26,26 +26,29 @@ def do_deploy(archive_path):
     remote_file = archive_path.split('/')[-1]
     remote_name = remote_file.split('.')[0]
 
-    if put(archive_path, '/tmp/{}'.format(remote_file)).failed is True:
-        return False
-    if run("mkdir -p /data/web_static/releases/{}"
-           .format(remote_name)).failed is True:
-        return False
-    if run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'
-           .format(remote_file, remote_name)).failed is True:
-        return False
-    if run('rm -r /tmp/{}'.format(remote_file)).failed is True:
-        return False
-    if run("mv /data/web_static/releases/{}/web_static/* "
-           "/data/web_static/releases/{}/"
-           .format(remote_name, remote_name)).failed is True:
-        return False
-    if run("rm -rf /data/web_static/releases/{}/web_static"
-           .format(remote_name)).failed is True:
-        return False
-    if run("rm -rf /data/web_static/current").failed is True:
-        return False
-    if run('ln -sf /data/web_static/releases/{}/ /data/web_static/current'
-           .format(remote_name)).failed is True:
-        return False
-    return True
+    if env.hosts:
+        try:
+            if put(archive_path, '/tmp/{}'.format(remote_file)).failed is True:
+                return False
+            if run("mkdir -p /data/web_static/releases/{}"
+                .format(remote_name)).failed is True:
+                return False
+            if run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'
+                .format(remote_file, remote_name)).failed is True:
+                return False
+            if run('rm -r /tmp/{}'.format(remote_file)).failed is True:
+                return False
+            if run("mv /data/web_static/releases/{}/web_static/* "
+                "/data/web_static/releases/{}/"
+                .format(remote_name, remote_name)).failed is True:
+                return False
+            if run("rm -rf /data/web_static/releases/{}/web_static"
+                .format(remote_name)).failed is True:
+                return False
+            if run("rm -rf /data/web_static/current").failed is True:
+                return False
+            if run('ln -sf /data/web_static/releases/{}/ /data/web_static/current'
+                .format(remote_name)).failed is True:
+                return True
+        except:
+            return False

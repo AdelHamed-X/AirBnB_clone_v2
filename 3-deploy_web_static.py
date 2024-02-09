@@ -10,33 +10,12 @@ env.hosts = ['ubuntu@54.174.144.6', 'ubuntu@34.229.137.175']
 env.key_filename = ['~/.ssh/id_rsa']
 
 
-def create_folder():
-    """ creates versions folder """
-    local("mkdir -p versions")
-
-
-def file_name():
-    current_date = datetime.utcnow()
-    filename = "web_static_{}{}{}{}{}{}".format(current_date.year,
-                                                current_date.month,
-                                                current_date.day,
-                                                current_date.hour,
-                                                current_date.minute,
-                                                current_date.second)
-    return filename
-
-
-def compress_all():
-    """ creates an archive compressed file """
-    file_path = "versions/{}.tgz".format(file_name())
-    local(f"tar -cvzf {file_path} web_static/*")
-    return file_path
-
-
 def do_pack():
-    """ The main fuction """
-    create_folder()
-    return compress_all()
+    """ creates an archive compressed file """
+    local("mkdir -p versions")
+    time_now = datetime.now().strftime("%Y%m%d%H%M%S")
+    filename = "web_static_{}".format(time_now)
+    local("tar -cvzf versions/{}.tgz web_static/*".format(filename))
 
 
 def do_deploy(archive_path):
