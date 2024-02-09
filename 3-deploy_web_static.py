@@ -16,6 +16,7 @@ def do_pack():
     time_now = datetime.now().strftime("%Y%m%d%H%M%S")
     filename = "web_static_{}".format(time_now)
     local("tar -cvzf versions/{}.tgz web_static/*".format(filename))
+    return "versions/{}.tgz".format(filename)
 
 
 def do_deploy(archive_path):
