@@ -6,7 +6,8 @@ from fabric.api import *
 from datetime import datetime
 from os import path
 
-env.hosts = ['54.174.144.6', '34.229.137.175']
+env.hosts = ['ubuntu@54.174.144.6', 'ubuntu@34.229.137.175']
+env.key_filename = ['~/.ssh/id_rsa']
 
 
 def create_folder():
@@ -42,10 +43,11 @@ def do_deploy(archive_path):
         return False
 
     remote_name = local(f'basename {archive_path} .tgz')
+    remote_file = "{}.tgz".format(remote_name)
 
-    if put(archive_path, f'/tmp/{remote_name}.tgz').failed ==  True:
+    if put(archive_path, '/tmp/{}'.format(remote_file)).failed ==  True:
         return False
-    if run(f"mkdir -p /data/web_static/releases/{remote_name}").failed == True:
+    if run(f"mkdir -p /data/web_static/releases/{}".format(remote_name)).failed == True:
         return False
     if run(f'tar -xzf /tmp/{remote_name}.tgz -C'
            f'/data/web_static/releases/{remote_name}/').failed ==  True:
