@@ -77,5 +77,5 @@ def deploy():
     archive_path = do_pack()
     if path.exists(archive_path) is False:
         return False
-    
+
     return do_deploy(archive_path)
