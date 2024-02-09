@@ -42,27 +42,23 @@ def do_deploy(archive_path):
     if not path.isfile(archive_path):
         return False
 
-    remote_name = local(f'basename {archive_path} .tgz')
+    remote_name = local('basename {} .tgz'.format(archive_path))
     remote_file = "{}.tgz".format(remote_name)
 
     if put(archive_path, '/tmp/{}'.format(remote_file)).failed ==  True:
         return False
-    if run(f"mkdir -p /data/web_static/releases/{}".format(remote_name)).failed == True:
+    if run("mkdir -p /data/web_static/releases/{}".format(remote_name)).failed == True:
         return False
-    if run(f'tar -xzf /tmp/{remote_name}.tgz -C'
-           f'/data/web_static/releases/{remote_name}/').failed ==  True:
+    if run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(remote_file, remote_name)).failed ==  True:
         return False
-    if run(f'rm -r /tmp/{remote_name}.tgz').failed == True:
+    if run('rm -r /tmp/{}'.format(remote_file)).failed == True:
         return False
-    if run(f"mv /data/web_static/releases/{remote_name}/web_static/*"
-           f"/data/web_static/releases/{remote_name}/").failed == True:
+    if run("mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/".format(remote_name, remote_name)).failed == True:
         return False
-    if run(f"rm -rf /data/web_static/releases/{remote_name}"
-           "/web_static").failed == True:
+    if run("rm -rf /data/web_static/releases/{}/web_static".format(remote_name)).failed == True:
         return False
     if run("rm -rf /data/web_static/current").failed == True:
         return False
-    if run(f'ln -sf /data/web_static/releases/{remote_name}/'
-           '/data/web_static/current').failed == True:
+    if run('ln -sf /data/web_static/releases/{}/ /data/web_static/current'.format(remote_name)).failed == True:
         return False
     return True
