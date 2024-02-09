@@ -42,8 +42,8 @@ def do_deploy(archive_path):
     if not path.isfile(archive_path):
         return False
 
-    remote_name = local('basename {} .tgz'.format(archive_path))
-    remote_file = "{}.tgz".format(remote_name)
+    remote_file = archive_path.split('/')[-1]
+    remote_name = remote_file.split('.')[0]
 
     if put(archive_path, '/tmp/{}'.format(remote_file)).failed ==  True:
         return False
