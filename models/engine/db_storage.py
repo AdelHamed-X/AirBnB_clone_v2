@@ -2,23 +2,9 @@
 """ This module represents the Database engine """
 from lib2to3.fixes import fix_itertools_imports
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from os import environ
-
-
-from models.city import City
-from models.state import State
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-from models.user import User
-
-user = environ.get("HBNB_MYSQL_USER")
-pwd = environ.get("HBNB_MYSQL_PWD")
-host = environ.get("HBNB_MYSQL_HOST")
-env = environ.get("HBNB_ENV")
-db = environ.get("HBNB_MYSQL_DB")
 
 Base = declarative_base()
 
@@ -76,9 +62,16 @@ class DBStorage:
     
     def reload(self):
         """ Create all tables in the database """
+        from models.city import City
+        from models.state import State
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+        from models.user import User
 
         Base.metadata.create_all(self.__engine)
 
-        Session = sessionmaker(expire_on_commit=False)
-        self.__session = Session(bind=self.__engine)
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session = scoped_session(Session)
+        self.__session = session()
         
