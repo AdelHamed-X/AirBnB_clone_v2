@@ -30,9 +30,17 @@ class DBStorage:
 
     def __init__(self):
         """ Instantiates new object """
-        self.__engine = create_engine(f"mysql+mysqldb://{user}\
-        :{pwd}@{host}/{db}", pool_pre_ping=True)
-        if environ.get("HBNB_ENV") == "test":
+        user = environ.get("HBNB_MYSQL_USER")
+        pwd = environ.get("HBNB_MYSQL_PWD")
+        host = environ.get("HBNB_MYSQL_HOST")
+        env = environ.get("HBNB_ENV")
+        db = environ.get("HBNB_MYSQL_DB")
+
+        self.__engine = create_engine("mysql+mysqldb://{}\:{}@{}/{}"
+                                      .format(user, pwd, host, db),
+                                      pool_pre_ping=True)
+
+        if env == "test":
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
