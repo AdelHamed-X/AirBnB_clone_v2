@@ -144,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
             for arg in args[1:]:
                 parameter = parse_attribute(arg)
                 setattr(new_instance, parameter[0], parameter[1])
-        storage.reload()
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
 
