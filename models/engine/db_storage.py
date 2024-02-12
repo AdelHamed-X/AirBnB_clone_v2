@@ -39,18 +39,16 @@ class DBStorage:
     def all(self, cls=None):
         """ Makes a query on the current database session """
         new_dict = {}
-        if cls:
+        all_classes = [State, City, User, Place, Review, Amenity]
+
+        if cls and cls not in all_classes:
             result = self.__session.query(cls).all()
-            for instance in result:
-                key = f"{type(instance).__name__}.{instance.id}"
-                new_dict[key] = instance
         else:
-            all_classes = [State, City, User, Place, Review, Amenity]
             for clas in all_classes:
                 result = self.__session.query(clas)
-                for instance in result:
-                    key = f"{type(instance).__name__}.{instance.id}"
-                    new_dict[key] = instance
+        for instance in result:
+            key = f"{instance.__class__.__name__}.{instance.id}"
+            new_dict[key] = instance
         return new_dict
 
     def new(self, obj):
@@ -59,8 +57,7 @@ class DBStorage:
     
     def save(self):
         """ Commit all changes to the current database session """
-        if self.__session:
-            self.__session.commit()
+        self.__session.commit()
     
     def delete(self, obj=None):
         """ Delete from the current database session 'obj' if not None """
