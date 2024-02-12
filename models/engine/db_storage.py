@@ -6,6 +6,13 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from os import environ
 
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+from models.user import User
+
 Base = declarative_base()
 
 
@@ -62,12 +69,6 @@ class DBStorage:
     
     def reload(self):
         """ Create all tables in the database """
-        from models.city import City
-        from models.state import State
-        from models.amenity import Amenity
-        from models.place import Place
-        from models.review import Review
-        from models.user import User
 
         Base.metadata.create_all(self.__engine)
 
