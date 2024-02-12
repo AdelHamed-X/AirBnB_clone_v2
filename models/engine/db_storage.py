@@ -29,7 +29,7 @@ class DBStorage:
         env = environ.get("HBNB_ENV")
         db = environ.get("HBNB_MYSQL_DB")
 
-        self.__engine = create_engine("mysql+mysqldb://{}\:{}@{}/{}"
+        self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}"
                                       .format(user, pwd, host, db),
                                       pool_pre_ping=True)
 
@@ -39,13 +39,14 @@ class DBStorage:
     def all(self, cls=None):
         """ Makes a query on the current database session """
         new_dict = {}
-        all_classes = [State, City, User, Place, Review, Amenity]
-
-        if cls and cls not in all_classes:
+        all_classes = {"Amenity": Amenity, "City": City,
+            "Place": Place, "Review": Review, "State": State, "User": User}
+        if cls:
             result = self.__session.query(cls).all()
         else:
+            result = []
             for clas in all_classes:
-                result = self.__session.query(clas)
+                result = self.__session.query(all_classes[clas]).all()
         for instance in result:
             key = f"{instance.__class__.__name__}.{instance.id}"
             new_dict[key] = instance
