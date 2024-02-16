@@ -29,7 +29,7 @@ def show_C(text):
 
 
 @app.route('/python/<text>', strict_slashes=False)
-def show_C(text="is cool"):
+def show_python(text="is cool"):
     """ returns "Python" with default text """
     text = text.replace('_', ' ')
     return f"C {text}"
