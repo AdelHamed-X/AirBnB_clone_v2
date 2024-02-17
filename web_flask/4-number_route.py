@@ -36,14 +36,10 @@ def show_python(text="is cool"):
     return f"Python {text}"
 
 
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def n_is_number(n):
     """ returns "n is a number" if it's only an integer """
-    try:
-        n = int(n)
-        return f"{n} is a number"
-    except ValueError:
-        pass
+    return f"{n} is a number"
 
 
 if __name__ == '__main__':
