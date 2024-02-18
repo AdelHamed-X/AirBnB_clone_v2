@@ -23,7 +23,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
 
     if environ.get("HBNB_TYPE_STORAGE") == 'db':
-        reviews = relationship('Review', cascade='all, delete, delete orphan',
+        reviews = relationship('Review', cascade='all, delete, delete-orphan',
                            backref='place')
     else:
         @property
