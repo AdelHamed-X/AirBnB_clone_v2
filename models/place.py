@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, ForeignKey, String, Integer, Float
+from sqlalchemy import Column, ForeignKey, String, Integer, Float, Table
+from sqlalchemy import MetaData
 from sqlalchemy.orm import relationship
 from os import environ
 import models
@@ -35,3 +36,12 @@ class Place(BaseModel, Base):
                 if (review.place_id == self.id):
                     places_list.append(review)
             return (places_list)
+    
+    metadata = MetaData()
+    place_amenity = Table('place_amenity', metadata,
+                          Column('place_id', String(60),
+                          ForeignKey('places.id'), primary_key=True,
+                          nullable=False),
+                          Column('amenity_id', String(60),
+                          ForeignKey('amenities.id'), primary_key=True,
+                          nullable=False))
