@@ -4,8 +4,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, ForeignKey, String, Integer, Float
 from sqlalchemy.orm import relationship
 from os import environ
-from models.review import Review
 import models
+from models.review import Review
 
 
 class Place(BaseModel, Base):
@@ -30,8 +30,8 @@ class Place(BaseModel, Base):
         def reviews(self):
             """ Getter method """
             all_reviews = models.storage.all(Review)
-            matched_places_list = []
+            places_list = []
             for review in all_reviews.values():
-                if review.place_id == self.id:
-                    matched_places_list.append(review)
-            return matched_places_list
+                if (review.place_id == self.id):
+                    places_list.append(review)
+            return (places_list)
