@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ This module represents the Database engine """
-from lib2to3.fixes import fix_itertools_imports
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,8 +11,8 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from models.user import User
+from models.base_model import Base
 
-Base = declarative_base()
 
 
 class DBStorage:
