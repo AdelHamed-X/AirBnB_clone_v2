@@ -14,7 +14,6 @@ from models.user import User
 from models.base_model import Base
 
 
-
 class DBStorage:
     """ Database Storage Class """
     __engine = None
