@@ -11,7 +11,8 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is not None:
-            return {k: v for k, v in FileStorage.__objects.items() if isinstance(v, cls)}
+            return {k: v for k, v in FileStorage.__objects.items()
+                    if isinstance(v, cls)}
         return FileStorage.__objects
 
     def new(self, obj):
@@ -63,7 +64,7 @@ class FileStorage:
         if obj is not None:
             key = f"{obj.__class__.__name__}.{obj.id}"
             FileStorage.__objects.pop(key)
-    
+
 
     def close(self):
         """ calls reload to deserialize the json file to objects """
