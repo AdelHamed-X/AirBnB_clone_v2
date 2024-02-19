@@ -18,7 +18,7 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     cities = relationship("City", cascade='all, delete, delete-orphan',
                         backref="state")
-    if environ.get('HBNB_STORAGE_TYPE') == 'FileStorage':
+    if environ.get('HBNB_STORAGE_TYPE') != 'db':
         @property
         def cities(self):
             all_cities = models.storage.all(City)
