@@ -18,6 +18,11 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     cities = relationship("City", cascade='all, delete, delete-orphan',
                         backref="state")
+    
+    def __init__(self, *args, **kwargs):
+        """ Initialising objects with inherited adjectives """
+        super().__init__(*args, **kwargs)
+
     if environ.get('HBNB_STORAGE_TYPE') != 'db':
         @property
         def cities(self):
