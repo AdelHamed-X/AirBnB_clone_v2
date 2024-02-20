@@ -16,3 +16,7 @@ class User(BaseModel, Base):
                           backref='user')
     reviews = relationship('Review', cascade='all, delete, delete-orphan',
                            backref='user')
+
+    def __init__(self, *args, **kwargs):
+        """ Initialising objects with inherited adjectives """
+        super().__init__(*args, **kwargs)

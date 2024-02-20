@@ -35,6 +35,11 @@ class Place(BaseModel, Base):
                         backref='place')
     amenities = relationship('Amenity', secondary=place_amenity,
                                 viewonly=False)
+
+    def __init__(self, *args, **kwargs):
+        """ Initialising objects with inherited adjectives """
+        super().__init__(*args, **kwargs)
+
     if environ.get("HBNB_TYPE_STORAGE") != 'db':
         city_id = ""
         user_id = ""
@@ -47,6 +52,7 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
 
         @property
         def reviews(self):
