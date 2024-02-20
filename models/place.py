@@ -2,11 +2,11 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, ForeignKey, String, Integer, Float, Table
-from sqlalchemy import MetaData
 from sqlalchemy.orm import relationship
 from os import environ
 import models
 from models.review import Review
+from models.city import City
 
 
 place_amenity = Table('place_amenity', Base.metadata,

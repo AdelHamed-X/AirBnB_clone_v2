@@ -23,7 +23,7 @@ class State(BaseModel, Base):
         """ Initialising objects with inherited adjectives """
         super().__init__(*args, **kwargs)
 
-    if environ.get('HBNB_STORAGE_TYPE') != 'db':
+    if environ.get('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
             all_cities = models.storage.all(City)
