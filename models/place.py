@@ -8,14 +8,14 @@ import models
 from models.review import Review
 from models.city import City
 
-
-place_amenity = Table('place_amenity', Base.metadata,
-                        Column('place_id', String(60),
-                        ForeignKey('places.id'), primary_key=True,
-                        nullable=False),
-                        Column('amenity_id', String(60),
-                        ForeignKey('amenities.id'), primary_key=True,
-                        nullable=False))
+if environ.get("HBNB_TYPE_STORAGE") == 'db':
+    place_amenity = Table('place_amenity', Base.metadata,
+                            Column('place_id', String(60),
+                            ForeignKey('places.id'), primary_key=True,
+                            nullable=False),
+                            Column('amenity_id', String(60),
+                            ForeignKey('amenities.id'), primary_key=True,
+                            nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -36,9 +36,6 @@ class Place(BaseModel, Base):
     amenities = relationship('Amenity', secondary=place_amenity,
                                 viewonly=False)
 
-    def __init__(self, *args, **kwargs):
-        """ Initialising objects with inherited adjectives """
-        super().__init__(*args, **kwargs)
 
     if environ.get("HBNB_TYPE_STORAGE") != 'db':
         city_id = ""
@@ -52,7 +49,6 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
-
 
         @property
         def reviews(self):
