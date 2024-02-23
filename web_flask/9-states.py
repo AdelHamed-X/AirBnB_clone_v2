@@ -9,10 +9,13 @@ app = Flask(__name__)
 
 
 @app.route('/states', strict_slashes=False)
-@app.route('/state/<id>', strict_slashes=False)
+@app.route('/states/<id>', strict_slashes=False)
 def show_states(id=None):
     """ function to handle /states page """
     all_states = storage.all(State).values()
+    if id is not None:
+        all_states = storage.all(State)
+        id = 'State.{}'.format(id)
     return render_template('9-states.html', all_states=all_states, id=id)
 
 
