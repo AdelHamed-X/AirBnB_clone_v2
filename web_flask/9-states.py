@@ -8,15 +8,15 @@ from models.state import State
 app = Flask(__name__)
 
 
-app.route('/states', strict_slashes=False)
-app.route('/state/<int:id>')
-def show_states(id):
+@app.route('/states', strict_slashes=False)
+@app.route('/state/<id>', strict_slashes=False)
+def show_states(id=None):
     """ function to handle /states page """
     all_states = storage.all(State).values()
     return render_template('9-states.html', all_states=all_states, id=id)
 
 
-app.teardown_appcontext
+@app.teardown_appcontext
 def teardown(exception):
     """ Reloading the session """
     storage.close()
