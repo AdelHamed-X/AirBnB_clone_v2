@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 """This is the city class"""
-from sqlalchemy.ext.declarative import declarative_base
+import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String
-from sqlalchemy import ForeignKey
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
-from os import environ
 
 
 class City(BaseModel, Base):
@@ -14,7 +12,7 @@ class City(BaseModel, Base):
         state_id: The state id
         name: input name
     """
-    if environ.get("HBNB_TYPE_STORAGE") == 'db':
+    if models.storage_type == 'db':
         __tablename__ = "cities"
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)

@@ -20,7 +20,7 @@ if environ.get("HBNB_TYPE_STORAGE") == 'db':
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    if environ.get("HBNB_TYPE_STORAGE") == 'db':
+    if models.storage_type == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)

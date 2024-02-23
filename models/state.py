@@ -14,7 +14,7 @@ class State(BaseModel, Base):
     Attributes:
         name: input name
     """
-    if environ.get("HBNB_TYPE_STORAGE") == 'db':
+    if models.storage_type == 'db':
         __tablename__ = "states"
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
@@ -25,7 +25,7 @@ class State(BaseModel, Base):
         """ Initialising objects with inherited adjectives """
         super().__init__(*args, **kwargs)
 
-    if environ.get('HBNB_TYPE_STORAGE') != 'db':
+    if models.storage_type != 'db':
         @property
         def cities(self):
             all_cities = models.storage.all(City)
